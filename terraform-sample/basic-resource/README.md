@@ -50,14 +50,13 @@ locals {
 	prefix_name = "devday"
 }
 
-#This block declares topic resource
+#This block declares google topic resource
 resource "google_pubsub_topic" "my-topic" { 
 	project = "klara-nonprod"
 	name = "${local.prefix_name}-${var.topic_name}"
-	message_retention_duration = "3600s" 
 }
 
-#This block declares subscription resource consume  the topic by referencing the topic id using "google_pubsub_topic.my-topic.id" from "my-topic" resource
+#This block declares google subscription resource consume the topic by defining the topic id using "google_pubsub_topic.my-topic.id" from "my-topic" resource
 resource "google_pubsub_subscription" "my-subscription" { 
 	project = "klara-nonprod"
 	name  = "${local.prefix_name}-${var.topic_name}-subscription"
@@ -65,18 +64,6 @@ resource "google_pubsub_subscription" "my-subscription" {
 
 	# 30 minutes
 	message_retention_duration = "1800s"
-	retain_acked_messages      = true
-
-	ack_deadline_seconds = 20
-
-	expiration_policy {
-		ttl = "300000.5s"
-	}
-	retry_policy {
-		minimum_backoff = "10s"
-	}
-
-	enable_message_ordering    = false 
 }
 ```
 Lastly, declare a variable to dynamic topic name which is called "var.topic_name" in "my-topic" resource.
@@ -90,24 +77,48 @@ variable "topic_name" {
 	type = string
 }
 ```
+
+This is an optional step, to expose the data about our resource in the end. This data is only available when the apply phase is executed, it means the real infrastructure has been provisioned.
+
+To create the output data, declare an output block to the resource property want to be returned.
+
+In this sample, due to the topic name is declaring dynamically, fetching the topic name after the resource is created is necessary.
+
+Copy this block to output.tf in this directory. 
+```bash
+output "pubsub_topic_name" {
+	description = "PubSub topic name created"
+    value       = google_pubsub_topic.my-topic.name
+}
+```
+
 ## Execution
-To provision the resources in configuration files, follow the steps as Terraform phases
+In this stage, the state of the resources in configuration files will be reflected in the real infrastructure. 
+The action is based on which phase will be executed. There are 3 main phases: init, plan and apply.
+
 ### Init phase
 To initialize the backend, in this sample, to install Google provider plugin and module block.
+
+This execution only needs to run one time until it detects the provider block is changed.
+
 ```bash
 terraform init
 ```
 
 ### Plan phase
-To validate the change and identify the gap between the current infrastructures and the desired infrastructures.
-This phase will return the draft of the new state, like the review phase.
+After this phase, the draft of the changes of all resources in this directory will be shown on the console, like the review phase.
+In this phase, automatically validate all the configuration files and identify the gap between the current infrastructures and the desired infrastructures.
+To execute this phase, run the command
+
 ```bash
 terraform plan
 ```
 In this sample, we declared a variable "topic_name" without any default value. Hence, the prompt will be shown up to ask for the value. Enter the value to continue.
 
 ### Apply phase
-To create or update the resource to real infrastructure. This phase executed the plan phase as default at first and the prompt is shown up to get the confirmation before the changes are applied to real infrastructures.
+After this phase, the resources of configuration files in this directory are provisioned to real infrastructure. In this phase, automatic run the plan phase at first and the prompt is shown up to get the confirmation before the changes are actually applied.
+To execute this phase, run the command
+
 ```bash
 terraform apply
 ```
@@ -116,13 +127,22 @@ In this sample, we declared a variable "topic_name" without any default value. H
 Review the changes and confirm to complete the action.
 
 ### Destroy
-Delete the resource from real infrastructure.
-By removing or comment the desired block of resources in the configuration file.
-Run the command 
+After this execution, all resources of all configuration files in this directory will be deleted from the real infrastructure.
+To execute this phase, run the command 
+
 ```bash
 terraform destroy
 ```
 Review the changes and confirm to complete the action.
+
+### Output
+After this execution, the console will show all the output data declared in this directory.
+
+Or to show the output of specific data based on <output-name>. As this sample, can replace the <output-name> to "pubsub_topic_name" to print out the created topic name.
+
+```bash
+terraform output <output-name>
+```
 ## References
 
 [Terraform documentation for Google Cloud provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resource)

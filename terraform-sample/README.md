@@ -46,29 +46,36 @@ variable "topic_name" {
 }
 ```
 ## Execution
-To provision the resources in configuration files, follow steps as Terraform phases.
+In this stage, the state of the resources in configuration files will be reflected in the real infrastructure. 
+The action is based on which phase will be executed. There are 3 main phases: init, plan and apply.
+
 ### Init phase
-To initialize the backend, install Google provider plugin and module block.
+To initialize the backend, in this sample, to install Google provider plugin and module block.
+
+This execution only needs to run one time until it detects the provider block is changed.
+
 ```bash
 terraform init
 ```
 ### Plan phase
-To validate the change and identify the gap between the current infrastructures and the desired infrastructures.
-This phase will return the draft of the new change, like the review phase.
+After this phase, the draft of the changes of all resources in this directory will be shown on the console, like the review phase.
 
+In this phase, automatically validate all the configuration files and identify the gap between the current infrastructures and the desired infrastructures.
 To execute this phase for all configuration files (.tf) placed in this directory, run this command
+
 ```bash
 terraform plan
 ```
 To execute plan command for configuration files (.tf) in specific folder, specify the target with a module name in the command.
 For example, execute plan command for group of resource on "pubsub-resource" module only by running
+
 ```bash
 terraform plan --target=module.pubsub-resource
 ```
 In this sample, we declared a variable "topic_name" without any default value. Hence, the prompt will be shown up to ask for the value. Enter the value to continue.
 
 ### Apply phase
-To create or update the resource to real infrastructure. This phase executed the plan phase as default at first and the prompt is shown up to get the confirmation before the changes are applied to real infrastructures.
+After this phase, the resources of configuration files in this directory are provisioned to real infrastructure. In this phase, automatic run the plan phase at first and the prompt is shown up to get the confirmation before the changes are actually applied.
 
 To execute this phase for all configuration files (.tf) placed in this directory, run this command
 ```bash
@@ -87,7 +94,8 @@ In this sample, we declared a variable "topic_name" without any default value. H
 Review the changes and confirm to complete the action.
 
 ### Destroy
-Delete the resource from real infrastructure.
+After this execution, all resources of all configuration files in this directory will be deleted from the real infrastructure.
+
 To execute this phase for all configuration files (.tf) placed in this directory, run this command
 ```bash
 terraform destroy

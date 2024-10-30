@@ -50,9 +50,9 @@ In this stage, the state of the resources in configuration files will be reflect
 The action is based on which phase will be executed. There are 3 main phases: init, plan and apply.
 
 ### Init phase
-To initialize the backend, in this sample, to install Google provider plugin and module block.
+To initialize the backend and inistall plugin as provider, in this sample, to install Google provider plugin.
 
-This execution only needs to run one time until it detects the provider block is changed.
+This execution only needs to run once until it detects the provider block is changed.
 
 ```bash
 terraform init

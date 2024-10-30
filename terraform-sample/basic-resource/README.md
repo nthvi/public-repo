@@ -21,6 +21,11 @@ To install, follow [documentation](https://cloud.google.com/sdk/docs/install) or
 
 ```
 
+Run this command to authenticate on Google Cloud
+```bash
+gcloud auth application-default login
+```
+
 ## Example project
 This sample creates PubSub topic and subscription on Google Cloud platform.
 
@@ -61,9 +66,6 @@ resource "google_pubsub_subscription" "my-subscription" {
 	project = "klara-nonprod"
 	name  = "${local.prefix_name}-${var.topic_name}-subscription"
 	topic = google_pubsub_topic.my-topic.id
-
-	# 30 minutes
-	message_retention_duration = "1800s"
 }
 ```
 Lastly, declare a variable to dynamic topic name which is called "var.topic_name" in "my-topic" resource.
@@ -97,9 +99,9 @@ In this stage, the state of the resources in configuration files will be reflect
 The action is based on which phase will be executed. There are 3 main phases: init, plan and apply.
 
 ### Init phase
-To initialize the backend, in this sample, to install Google provider plugin and module block.
+To initialize the backend and inistall plugin as provider, in this sample, to install Google provider plugin.
 
-This execution only needs to run one time until it detects the provider block is changed.
+This execution only needs to run once until it detects the provider block is changed.
 
 ```bash
 terraform init

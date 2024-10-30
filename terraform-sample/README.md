@@ -20,6 +20,10 @@ To install, follow [documentation](https://cloud.google.com/sdk/docs/install) or
 & $env:Temp\GoogleCloudSDKInstaller.exe
 
 ```
+Run this command to authenticate on Google Cloud
+```bash
+gcloud auth application-default login
+```
 
 ## Example project
 This sample shows how to provision the group of resources from a specific source by using module block.

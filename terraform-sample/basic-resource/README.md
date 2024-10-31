@@ -1,6 +1,6 @@
 # Terraform basic
 
-This guideline shows an example of Terraform structure and how to provision the resource using Terraform.
+This guideline shows an example of Terraform structure and how to provision the resource using Terraform .
 
 ## Installation
 ### Terraform
@@ -10,6 +10,10 @@ Then verify with this command
 ```bash
 terraform -v
 ```
+
+After finishing the installation, add the "<your-directory>/terraform" folder path to PATH on the system environment configuration in your local machine. 
+After these steps terraform command is ready to run.
+
 ### Gcloud
 In this sample, we will use Google  Cloud as Terraform provider, gcloud CLI is required. 
 Skip this step if gcloud has been installed in your workspace.
@@ -31,10 +35,10 @@ This sample creates PubSub topic and subscription on Google Cloud platform.
 
 Firstly, provide a block to declare Google provider as PubSub resource from Google cloud platform. 
 
-Copy this block to provider.tf file in this directory.
+Copy this block to versions.tf file in this directory.
 
 ```bash
-#This block declares provider, google provider is set as default if no provided any provider.
+#This block declares google provider
 terraform {
   required_providers {
     google = {
@@ -72,7 +76,7 @@ Lastly, declare a variable to dynamic topic name which is called "var.topic_name
 
 This variable type is text and no default value is specified. Hence, this value should be inputted when the file is run.
 
-Copy this block to variable.tf in this directory.
+Copy this block to variables.tf in this directory.
 
 ```bash
 variable "topic_name" {

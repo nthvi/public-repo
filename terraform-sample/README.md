@@ -10,6 +10,10 @@ Then verify with this command
 ```bash
 terraform -v
 ```
+
+After finishing the installation, add the "<your-directory>/terraform" folder path to PATH on the system environment configuration in your local machine. 
+After these steps terraform command is ready to run.
+
 ### Gcloud
 In this example, we will use Google  Cloud as Terraform provider, install "gcloud" is required. 
 Skip this step if gcloud has been installed in your workspace.
@@ -41,7 +45,7 @@ module "pubsub-resource" {
 
 Next, provide a variable block for "topic_name" to allow user provide that value and forward the nested resource "my-topic" using "var.topic_name".
 
-Copy this block to variable.tf file in this directory.
+Copy this block to variables.tf file in this directory.
 
 ```bash
 #This block declares variable for module "pubsub-resource"

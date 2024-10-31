@@ -11,7 +11,7 @@ Then verify with this command
 terraform -v
 ```
 
-After finishing the installation, add the "<your-directory>/terraform" folder path to PATH on the system environment configuration in your local machine. 
+After finishing the installation, add the "your-directory/terraform" folder path to PATH on the system environment configuration in your local machine. 
 After these steps terraform command is ready to run.
 
 ### Gcloud
@@ -144,7 +144,7 @@ Review the changes and confirm to complete the action.
 ### Output
 After this execution, the console will show all the output data declared in this directory.
 
-Or to show the output of specific data based on output block. As this sample, can replace the "<output-name>" to "pubsub_topic_name" to print out only the created topic name.
+Or to show the output of specific data based on output block. As this sample, can replace the "output-name" to "pubsub_topic_name" to print out only the created topic name.
 
 ```bash
 terraform output <output-name>

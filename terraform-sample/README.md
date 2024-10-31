@@ -11,7 +11,7 @@ Then verify with this command
 terraform -v
 ```
 
-After finishing the installation, add the "<your-directory>/terraform" folder path to PATH on the system environment configuration in your local machine. 
+After finishing the installation, add the "your-directory/terraform" folder path to PATH on the system environment configuration in your local machine. 
 After these steps terraform command is ready to run.
 
 ### Gcloud

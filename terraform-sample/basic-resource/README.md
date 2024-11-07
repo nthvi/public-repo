@@ -80,7 +80,9 @@ Copy this block to variables.tf in this directory.
 
 ```bash
 variable "topic_name" {
+	description = "Enter the PubSub topic name"
 	type = string
+
 }
 ```
 
